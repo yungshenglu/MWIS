@@ -74,7 +74,7 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
 ---
 ## Installation
 
-```
+```bash
 # Compilation
 $ make
 
