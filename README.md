@@ -74,15 +74,42 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
 ---
 ## Installation
 
+### Centralized
+
 ```bash
-# Compilation
+# Compilation under centralized folder
 $ make
 
 # Execution for centralized program
 $ ./main test1.txt
+```
+
+### Distributed
+
+```bash
+# Compilation under distributed folder
+$ make
 
 # Exrcution for distributed program
 $ ./main test2.txt
+```
+
+---
+## Results
+
+### Centralized
+```bash
+$ ./main test1.txt
+MWIS: {0, 3, 4, 5, 7, 8}
+Total MWIS weight: 259
+```
+
+### Distributed
+
+```bash
+$ ./main test2.txt
+MWIS: {1, 4, 5, 7, 8, 9}
+Total MWIS weight: 274
 ```
 
 ---
