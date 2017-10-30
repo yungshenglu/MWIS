@@ -1,0 +1,14 @@
+# vscode.config
+.vscode
+
+# object file
+./centralized/*.o
+./distributed/*.o
+
+# execution file
+./centralized/main
+./distributed/main
+
+# test_result
+./centralized/test_result1.txt
+./distributed/test_result2.txt
