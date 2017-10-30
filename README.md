@@ -124,4 +124,5 @@ Total MWIS weight: 274
 
 ---
 > This repository is NCTU CS course assignment of "Distributed Algorithnm". If you are taking this course, please do not duplicate from this repository. All rights reserved.
+
 [![License: IEEE](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
