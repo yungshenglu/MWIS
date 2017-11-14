@@ -107,6 +107,8 @@ int main(int argc, char *argv[]) {
             }
             printf("}\n");
             printf("Total MWIS weight: %d\n", MWIS_weight);
+        } else {
+            printf("There are some diffenents in %d times simulation.\n", simulation_times);
         }
     }
 
