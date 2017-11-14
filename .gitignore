@@ -2,10 +2,10 @@
 .vscode
 
 # object file
-./distributed/*.o
+distributed/*.o
 
 # execution file
-./distributed/main
+distributed/main
 
 # test_result
-./distributed/test_result2.txt
+distributed/test_result2.txt
