@@ -74,16 +74,16 @@ int main(int argc, char *argv[]) {
         }
 
         srand(time(NULL));
-        for (int i = 0; i < mwis.size(); ++i) {
-            mwis[i].set_path(fin);
-            mwis[i].calculate_degree_priority();
-            mwis[i].set_map();
-
-            // Random nodes into the set.
-            mwis[i].set_isMWIS(rand() % 2);
-        }
-        
         for (int t = 0; t < simulation_times; ++t) {
+            for (int i = 0; i < mwis.size(); ++i) {
+                mwis[i].set_path(fin);
+                mwis[i].calculate_degree_priority();
+                mwis[i].set_map();
+
+                // Random nodes into the set.
+                mwis[i].set_isMWIS(rand() % 2);
+            }
+            
             while (!compare_result(latest, current)) {
                 for (int i = 0; i < current.size(); ++i)
                     latest[i] = current[i];
