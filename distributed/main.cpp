@@ -35,23 +35,19 @@ int main(int argc, char *argv[]) {
             mwis[i].set_index(i);
         }
 
+        // Set random seeds.
         srand(time(NULL));
-        for (int i = 0; i < mwis.size(); ++i) {
-            mwis[i].set_path(fin);
-            mwis[i].calculate_degree_priority();
-            mwis[i].set_map();
 
-            // Random nodes into the set.
-            mwis[i].set_isMWIS(rand() % 2);
-        }
-
-        // test
-        for (int s = 0; s < mwis.size(); ++s) {
-            printf("%d ", mwis[s].get_isMWIS());
-        }
-        printf("\n");
-        
         for (int t = 0; t < simulation_times; ++t) {
+            for (int i = 0; i < mwis.size(); ++i) {
+                mwis[i].set_path(fin);
+                mwis[i].calculate_degree_priority();
+                mwis[i].set_map();
+
+                // Random nodes into the set.
+                mwis[i].set_isMWIS(rand() % 2);
+            }
+
             while (!compare_result(latest, result)) {
                 for (int i = 0; i < result.size(); ++i)
                     latest[i] = result[i];
