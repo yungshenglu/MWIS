@@ -155,8 +155,5 @@ void MWIS::sort_msg() {
 }
 
 bool MWIS::compare_msg(const Msg& a, const Msg& b) {
-    if (a.priority == b.priority) {
-        return b.sender < a.sender;
-    }
     return b.priority > a.priority;
 } 
