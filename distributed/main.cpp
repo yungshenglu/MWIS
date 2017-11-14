@@ -42,8 +42,14 @@ int main(int argc, char *argv[]) {
             mwis[i].set_map();
 
             // Random nodes into the set.
-            mwis[i].set_isMWIS(rand() % 1);
+            mwis[i].set_isMWIS(rand() % 2);
         }
+
+        // test
+        for (int s = 0; s < mwis.size(); ++s) {
+            printf("%d ", mwis[s].get_isMWIS());
+        }
+        printf("\n");
         
         for (int t = 0; t < simulation_times; ++t) {
             while (!compare_result(latest, result)) {
