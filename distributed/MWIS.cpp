@@ -82,6 +82,10 @@ void MWIS::set_path(ifstream& fin) {
     }
 }
 
+void MWIS::set_isMWIS(bool isMWIS) {
+    _isMWIS = isMWIS;
+}
+
 void MWIS::send_msg() {
     for (int i = 0; i < _neighbors.size(); ++i) {
         Msg msg = {

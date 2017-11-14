@@ -36,6 +36,7 @@ public:
     void set_weight(ifstream& fin);
     void set_path(ifstream& fin);
     void set_map();
+    void set_isMWIS(bool);
 
     void send_msg();
     void recv_msg();
