@@ -46,7 +46,6 @@ void store_result(vector<int> current, int weight) {
 
         if (isSameWithLatest) {
             result[i].count += 1;
-            break;
         }
     }
 }
@@ -74,9 +73,7 @@ int main(int argc, char *argv[]) {
             mwis[i].set_index(i);
         }
 
-        // Set random seed.
         srand(time(NULL));
-
         for (int t = 0; t < simulation_times; ++t) {
             for (int i = 0; i < mwis.size(); ++i) {
                 mwis[i].set_path(fin);
@@ -120,17 +117,17 @@ int main(int argc, char *argv[]) {
             }
             
             isSame = true;
-            tmp_latest.assign(tmp.begin(), tmp.end());
-            store_result(tmp, MWIS_weight);
-
-            if (t != 0) {
+            if (t == 0) {
                 tmp_latest.assign(tmp.begin(), tmp.end());
+                store_result(tmp, MWIS_weight);
+            } else {
                 store_result(tmp, MWIS_weight);
                 for (int i = 0; i < tmp.size(); ++i) {
                     if (tmp[i] != tmp_latest[i]) {
                         isSame = false;
                     }
                 }
+                tmp_latest.assign(tmp.begin(), tmp.end());
             }
         }
 
