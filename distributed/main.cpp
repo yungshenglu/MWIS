@@ -46,6 +46,7 @@ void store_result(vector<int> current, int weight) {
 
         if (isSameWithLatest) {
             result[i].count += 1;
+            break;
         }
     }
 }
@@ -119,17 +120,17 @@ int main(int argc, char *argv[]) {
             }
             
             isSame = true;
-            if (t == 0) {
+            tmp_latest.assign(tmp.begin(), tmp.end());
+            store_result(tmp, MWIS_weight);
+
+            if (t != 0) {
                 tmp_latest.assign(tmp.begin(), tmp.end());
-                store_result(tmp, MWIS_weight);
-            } else {
                 store_result(tmp, MWIS_weight);
                 for (int i = 0; i < tmp.size(); ++i) {
                     if (tmp[i] != tmp_latest[i]) {
                         isSame = false;
                     }
                 }
-                tmp_latest.assign(tmp.begin(), tmp.end());
             }
         }
 
