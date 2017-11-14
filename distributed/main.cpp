@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
             mwis[i].set_map();
 
             // Random nodes into the set.
-            mwis[i].set_isMWIS(rand() % 1);
+            mwis[i].set_isMWIS(rand() % 2);
         }
         
         for (int t = 0; t < simulation_times; ++t) {
