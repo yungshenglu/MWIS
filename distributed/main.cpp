@@ -73,7 +73,9 @@ int main(int argc, char *argv[]) {
             mwis[i].set_index(i);
         }
 
+        // Set random seed.
         srand(time(NULL));
+
         for (int t = 0; t < simulation_times; ++t) {
             for (int i = 0; i < mwis.size(); ++i) {
                 mwis[i].set_path(fin);
