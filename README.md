@@ -14,21 +14,20 @@ If each vertex is associated with a weight (a positive real number), then $S$ is
 
 There exist many heuristics for these two problems. One well-known greedy approach works by selecting a vertex into the set, removing it and adjacent vertices from the graph, and repeating this process on the remaining graph. The result found by the *greedy approach* can only be a maximal independent set (MIS), an independent set of which no proper superset is also an independent set. If nodes are associated with weights, then the result is a **maximal weighted independent set (MWIS)**.
 
+### Two possible modifications
+
+1. (M1) Arbitrary initial values. In the previous exercise, you probably assume that each node is NOT
+in the set initially. We now assume that the initial decision of a node is randomly determined. It
+could be IN or OUT of the set with equal probability.
+2. (M2) Anonymous algorithm. We now assume no process id to break tie when comparing priorities
+between two neighboring nodes.
+
 ---
 ## Solutions
 
-### Centralized programming
+### Question 
 
-Read the input test file and estblish a path map to note each vertex's neighbors. By sorting the priority of each vertex, we can update the latest MWIS set.
-* Read the input test file and establish an object called `mwis`.
-* Set the path and each vertex's weight by calling function `set_weight_vector` and `set_path_vector`.
-* Calculate the degree and the priority by calling function `calculate_degree_priority`.
-* Calculate the MWIS set by calling function `calculate_MWIS`.
-    * Check each vertex is MWIS or not.
-    * If not, push the current vertex into MWIS set first. and then calculate its neighbors.
-    * Update the latest degree and priority by calling function `update_degree_priority`.
-* Calculate the total weight of vertex in MWIS set by calling `calculate_MWIS_weight`.
-* Print the result of MWIS set and it's total weight.
+Modify the distributed program to generate random initial value for each node (M1 without M2). Note that different initial values may lead to different results. Performs 1,000 tests to see if all test results are identical. Did these tests produce the same result?
 
 ### Distributed programming
 
@@ -54,62 +53,41 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
 ---
 ## Structure
 
-* Folder `centralized` - program by centralized method
-    * `Makefile`
-    * `main.cpp` - main function
-    * `MWIS.cpp` - implement class for MWIS
-    * `MWIS.h` - class for MWIS
-    * `header.h` - include all libraries
-    * `test1.txt` - input file
-    * `test_result1.txt` - reference result for input file
 * Folder `distributed` - program by distributed method
     * `Makefile`
     * `main.cpp` - main function
     * `MWIS.cpp` - implement class for MWIS
     * `MWIS.h` - class for MWIS
     * `header.h` - include all libraries
+    * `test1.txt` - input file
     * `test2.txt` - input file
     * `test_result2.txt` - reference result for input file
 
 ---
 ## Installation
 
-### Centralized
-
-```bash
-# Compilation under centralized folder
-$ make
-
-# Execution for centralized program
-$ ./main test1.txt
-```
-
-### Distributed
-
 ```bash
 # Compilation under distributed folder
 $ make
 
 # Exrcution for distributed program
+$ ./main test1.txt
 $ ./main test2.txt
 ```
 
 ---
 ## Results
 
-### Centralized
 ```bash
 $ ./main test1.txt
-MWIS: {0, 3, 4, 5, 7, 8}
-Total MWIS weight: 259
-```
-
-### Distributed
-
-```bash
-$ ./main test2.txt
+All 1000 times results are same.
 MWIS: {1, 4, 5, 7, 8, 9}
 Total MWIS weight: 274
+
+$ ./main test2.txt
+All 1000 times results are same.
+MWIS: {4, 5, 6, 8}
+Total MWIS weight: 324
 ```
 
 ---
