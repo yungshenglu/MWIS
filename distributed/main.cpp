@@ -65,9 +65,6 @@ int main(int argc, char *argv[]) {
         fin >> vertex;
         vector<MWIS> mwis(vertex);
 
-        latest.resize(vertex, true);
-        current.resize(vertex, false);
-
         for (int i = 0; i < mwis.size(); ++i) {
             mwis[i].set_weight(fin);
             mwis[i].set_index(i);
@@ -75,6 +72,9 @@ int main(int argc, char *argv[]) {
 
         srand(time(NULL));
         for (int t = 0; t < simulation_times; ++t) {
+            latest.resize(vertex, true);
+            current.resize(vertex, false);
+            
             for (int i = 0; i < mwis.size(); ++i) {
                 mwis[i].set_path(fin);
                 mwis[i].calculate_degree_priority();
