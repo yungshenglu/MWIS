@@ -21,7 +21,6 @@ bool compare_result(vector<bool> latest, vector<bool> current) {
 }
 
 void store_result(vector<int> current, int weight) {
-    bool isSameWithLatest = true;
     Result latest;
 
     if (result.empty()) {
@@ -34,18 +33,23 @@ void store_result(vector<int> current, int weight) {
 
     for (int i = 0; i < result.size(); ++i) {
         for (int j = 0; j < result[i].result_list.size(); ++j) {
-            if (current[j] != result[i].result_list[j]) {
-                latest.result_list.assign(current.begin(), current.end());
-                latest.count = 1;
-                latest.weight = weight;
-                result.push_back(latest);
-                isSameWithLatest = false;
+            if (current[j] == result[i].result_list[j]) {
+                if (j == result[i].result_list.size() - 1) {
+                    result[i].count += 1;
+                    return;
+                }
+                continue;
+            } else {
                 break;
             }
         }
 
-        if (isSameWithLatest) {
-            result[i].count += 1;
+        if (i == result.size() - 1) {
+            latest.result_list.assign(current.begin(), current.end());
+            latest.count = 1;
+            latest.weight = weight;
+            result.push_back(latest);
+            return;
         }
     }
 }
@@ -53,11 +57,10 @@ void store_result(vector<int> current, int weight) {
 int main(int argc, char *argv[]) {
     ifstream fin;
     vector<bool> latest, current;
-    vector<int> tmp_latest;
+    vector<int> tmp, tmp_latest;
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
     int simulation_times = 1000;
-    bool isSame = true;
 
     // Read the input file
     fin.open(filename);
@@ -70,17 +73,18 @@ int main(int argc, char *argv[]) {
             mwis[i].set_index(i);
         }
 
-        srand(time(NULL));
+        for (int i = 0; i < mwis.size(); ++i) {
+            mwis[i].set_path(fin);
+            mwis[i].calculate_degree_priority();
+            mwis[i].set_map();
+        }
+
         for (int t = 0; t < simulation_times; ++t) {
             latest.resize(vertex, true);
             current.resize(vertex, false);
             
             for (int i = 0; i < mwis.size(); ++i) {
-                mwis[i].set_path(fin);
-                mwis[i].calculate_degree_priority();
-                mwis[i].set_map();
-
-                // Random nodes into the set.
+                srand(time(NULL));
                 mwis[i].set_isMWIS(rand() % 2);
             }
             
@@ -108,7 +112,7 @@ int main(int argc, char *argv[]) {
             }
 
             MWIS_weight = 0;
-            vector<int> tmp;
+            tmp.clear();
             for (int i = 0; i < current.size(); ++i) {
                 if (current[i]) {
                     tmp.push_back(i);
@@ -116,23 +120,12 @@ int main(int argc, char *argv[]) {
                 }
             }
             
-            isSame = true;
-            if (t == 0) {
-                tmp_latest.assign(tmp.begin(), tmp.end());
-                store_result(tmp, MWIS_weight);
-            } else {
-                store_result(tmp, MWIS_weight);
-                for (int i = 0; i < tmp.size(); ++i) {
-                    if (tmp[i] != tmp_latest[i]) {
-                        isSame = false;
-                    }
-                }
-                tmp_latest.assign(tmp.begin(), tmp.end());
-            }
+            tmp_latest.assign(tmp.begin(), tmp.end());
+            store_result(tmp, MWIS_weight);
         }
 
         // Print reuslt
-        if (isSame) {
+        if (result.size() == 1) {
             printf("All %d times results are the same.\n", simulation_times);
             for (int i = 0; i < result.size(); ++i) {
                 printf("MWIS: {");
