@@ -21,7 +21,6 @@ bool compare_result(vector<bool> latest, vector<bool> current) {
 }
 
 void store_result(vector<int> current, int weight) {
-    bool isSameWithLatest = true;
     Result latest;
 
     if (result.empty()) {
@@ -34,18 +33,23 @@ void store_result(vector<int> current, int weight) {
 
     for (int i = 0; i < result.size(); ++i) {
         for (int j = 0; j < result[i].result_list.size(); ++j) {
-            if (current[j] != result[i].result_list[j]) {
-                latest.result_list.assign(current.begin(), current.end());
-                latest.count = 1;
-                latest.weight = weight;
-                result.push_back(latest);
-                isSameWithLatest = false;
+            if (current[j] == result[i].result_list[j]) {
+                if (j == result[i].result_list.size() - 1) {
+                    result[i].count += 1;
+                    return;
+                }
+                continue;
+            } else {
                 break;
             }
         }
 
-        if (isSameWithLatest) {
-            result[i].count += 1;
+        if (i == result.size() - 1) {
+            latest.result_list.assign(current.begin(), current.end());
+            latest.count = 1;
+            latest.weight = weight;
+            result.push_back(latest);
+            return;
         }
     }
 }
@@ -68,6 +72,9 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < mwis.size(); ++i) {
             mwis[i].set_weight(fin);
             mwis[i].set_index(i);
+        }
+
+        for (int i = 0; i < mwis.size(); ++i) {
             mwis[i].set_path(fin);
             mwis[i].calculate_degree_priority();
             mwis[i].set_map();
