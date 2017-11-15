@@ -138,12 +138,6 @@ int main(int argc, char *argv[]) {
                 }
                 tmp_latest.assign(tmp.begin(), tmp.end());
             }
-
-            // test
-            for (int i = 0; i < tmp_latest.size(); ++i) {
-                printf("%d ", tmp_latest[i]);
-            }
-            printf("\n---");
         }
 
         // Print reuslt
