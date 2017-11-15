@@ -17,18 +17,15 @@ There exist many heuristics for these two problems. One well-known greedy approa
 ---
 ## Solutions
 
-### Centralized programming
+### Question
 
-Read the input test file and estblish a path map to note each vertex's neighbors. By sorting the priority of each vertex, we can update the latest MWIS set.
-* Read the input test file and establish an object called `mwis`.
-* Set the path and each vertex's weight by calling function `set_weight_vector` and `set_path_vector`.
-* Calculate the degree and the priority by calling function `calculate_degree_priority`.
-* Calculate the MWIS set by calling function `calculate_MWIS`.
-    * Check each vertex is MWIS or not.
-    * If not, push the current vertex into MWIS set first. and then calculate its neighbors.
-    * Update the latest degree and priority by calling function `update_degree_priority`.
-* Calculate the total weight of vertex in MWIS set by calling `calculate_MWIS_weight`.
-* Print the result of MWIS set and it's total weight.
+Modify the distributed program to be an anonymous algorithm with arbitrary initial values (M1 plus M2). In the new program called HW2b, a node can be in the set if all of its neighboring nodes with *larger* $W(v) / (deg(v) + 1)$ values are all out of the set, and it must be out of the set otherwise. Performs 1,000 tests on the same input data file, each with different randomized initial values.
+* Is it possible that this program does not stop for some input? Why?
+    * It is possible that this program does stop for both test files. Because the program won’t consider the case when $W(v)$ are identical in each two nodes, it won’t happen deadlock.
+* If this program does stop for some input file, please list all possible results (one line for each set of duplicated results) with respective percentages. Are all these results correct (independent sets)?
+    * This program does stop in both test files and the percentage are $100%$. The results in `test1.txt` is wrong because node 3 and 4 are neighbors, they should not be in the set at the same time. However, the result in `test2.txt` is correct. Thus, the results in this program may not be corrected in some cases of input files.
+
+> In that this program doesn’t consider the case when the $W(v)$ is identical of any two neighbor’s nodes, the results may become incorrect in some cases of input files. Therefore, when it meets the case of two neighbor’s nodes with identical $W(v)$, just random one of the node into the set, then the problem will be solved.
 
 ### Distributed programming
 
@@ -54,37 +51,18 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
 ---
 ## Structure
 
-* Folder `centralized` - program by centralized method
-    * `Makefile`
-    * `main.cpp` - main function
-    * `MWIS.cpp` - implement class for MWIS
-    * `MWIS.h` - class for MWIS
-    * `header.h` - include all libraries
-    * `test1.txt` - input file
-    * `test_result1.txt` - reference result for input file
 * Folder `distributed` - program by distributed method
     * `Makefile`
     * `main.cpp` - main function
     * `MWIS.cpp` - implement class for MWIS
     * `MWIS.h` - class for MWIS
     * `header.h` - include all libraries
+    * `test1.txt` - input file
     * `test2.txt` - input file
     * `test_result2.txt` - reference result for input file
 
 ---
 ## Installation
-
-### Centralized
-
-```bash
-# Compilation under centralized folder
-$ make
-
-# Execution for centralized program
-$ ./main test1.txt
-```
-
-### Distributed
 
 ```bash
 # Compilation under distributed folder
@@ -92,24 +70,22 @@ $ make
 
 # Exrcution for distributed program
 $ ./main test2.txt
+$ ./main test2.txt
 ```
 
 ---
 ## Results
 
-### Centralized
 ```bash
 $ ./main test1.txt
-MWIS: {0, 3, 4, 5, 7, 8}
-Total MWIS weight: 259
-```
+All 1000 times results are same.
+MWIS: {1, 3, 4, 5, 7, 8}
+Total MWIS weight: 329
 
-### Distributed
-
-```bash
 $ ./main test2.txt
-MWIS: {1, 4, 5, 7, 8, 9}
-Total MWIS weight: 274
+All 1000 times results are same.
+MWIS: {4, 5, 6, 8}
+Total MWIS weight: 324
 ```
 
 ---
