@@ -65,32 +65,26 @@ int main(int argc, char *argv[]) {
         fin >> vertex;
         vector<MWIS> mwis(vertex);
 
+        for (int i = 0; i < mwis.size(); ++i) {
+            mwis[i].set_weight(fin);
+            mwis[i].set_index(i);
+            mwis[i].set_path(fin);
+            mwis[i].calculate_degree_priority();
+            mwis[i].set_map();
+        }
+
+        // Set random seeds
+        srand(time(NULL));
+
         for (int t = 0; t < simulation_times; ++t) {
-            srand(time(NULL));
-            
             latest.resize(vertex, true);
             current.resize(vertex, false);
 
             for (int i = 0; i < mwis.size(); ++i) {
-                mwis[i].set_weight(fin);
-                mwis[i].set_index(i);
-            }
-
-            for (int i = 0; i < mwis.size(); ++i) {
-                mwis[i].set_path(fin);
-                mwis[i].calculate_degree_priority();
-                mwis[i].set_map();
-
                 // Random nodes into the set.
+                srand(time(NULL));
                 mwis[i].set_isMWIS(rand() % 2);
-                
             }
-            for (int i = 0; i < mwis.size(); ++i) {
-                if (i == 1 || i == 3) {
-                    printf("%d ", mwis[i].get_isMWIS());
-                }
-            }
-            printf("\n");
             
             while (!compare_result(latest, current)) {
                 for (int i = 0; i < current.size(); ++i)
