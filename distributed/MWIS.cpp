@@ -99,17 +99,19 @@ void MWIS::send_msg() {
     }
 }
 
-void MWIS::recv_msg() {
-    MWIS::sort_msg();
+void MWIS::recv_msg(bool flag) {
+    if (true) {
+        MWIS::sort_msg();
+        while (!_recv_buff.empty()) {
+            Msg recv = _recv_buff.front();
+            for (int i = 0; i < _map.size(); ++i) {
+                _map[i].priority = recv.map[i].priority;
+                _map[i].isMWIS = recv.map[i].isMWIS;
+            }
+            MWIS::calculate_MWIS(recv);
 
-    while (!_recv_buff.empty()) {
-        Msg recv = _recv_buff.front();
-        for (int i = 0; i < _map.size(); ++i) {
-            _map[i].priority = recv.map[i].priority;
-            _map[i].isMWIS = recv.map[i].isMWIS;
+            _recv_buff.pop();
         }
-        MWIS::calculate_MWIS(recv);
-        _recv_buff.pop();
     }
 }
 

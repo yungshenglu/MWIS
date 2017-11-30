@@ -39,7 +39,7 @@ public:
     void set_isMWIS(bool);
 
     void send_msg();
-    void recv_msg();
+    void recv_msg(bool flag);
     void calculate_degree_priority();
     void calculate_MWIS(Msg msg);
     void sort_msg();

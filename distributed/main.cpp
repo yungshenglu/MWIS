@@ -3,6 +3,49 @@
 
 using namespace std;
 
+typedef struct table {
+    vector<int> result;
+    int count;
+    int weight;
+} Table;
+
+vector<Table> result_table;
+
+void append_result(vector<int> result, int weight) {
+    Table new_result = { 
+        result, 1, weight
+    };
+
+    result_table.push_back(new_result);
+}
+
+void store_result(vector<int> result, int weight) {
+    if (!result_table.size()) {
+        append_result(result, weight);
+    } else {
+        bool flag = true;
+
+        for (int i = 0; i < result_table.size(); ++i) {
+            flag = true;
+            for (int j = 0; j < result_table[i].result.size(); ++j) {
+                if (result[j] != result_table[i].result[j]) {
+                    flag = false;
+                    break;
+                }
+
+                if (j == result_table[i].result.size() - 1 && flag) {
+                    result_table[i].count += 1;
+                    return;
+                }
+            }
+        }
+
+        if (!flag) {
+            append_result(result, weight);
+        }
+    }
+}
+
 bool compare_result(vector<bool> latest, vector<bool> current) {
     for (int i = 0; i < latest.size(); ++i) {
         if (latest[i] != current[i])
@@ -19,11 +62,11 @@ int main(int argc, char *argv[]) {
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
     int simulation_times = 1000;
-    bool isSame = true;
+    //bool isSame = true;
 
     // Set random seeds.
     srand(time(NULL));
-    
+
     // Read the input file
     fin.open(filename);
     while (!fin.eof()) {
@@ -45,7 +88,7 @@ int main(int argc, char *argv[]) {
                 mwis[i].set_map();
 
                 // Random nodes into the set.
-                mwis[i].set_isMWIS(rand() % 2);
+                mwis[i].set_isMWIS(true);
             }
 
             while (!compare_result(latest, result)) {
@@ -63,10 +106,14 @@ int main(int argc, char *argv[]) {
                         mwis[j]._send_buff.pop();
                     }
                 }
-            
+
+                int k = rand() % 10;
                 for (int j = 0; j < mwis.size(); ++j) {
                     // Receive all msg from own neighbors.
-                    mwis[j].recv_msg();
+                    if (j == k)
+                        mwis[j].recv_msg(true);
+                    else
+                        mwis[j].recv_msg(false);
                     result[j] = mwis[j].get_map()[j].isMWIS;
                 }
             }
@@ -79,36 +126,28 @@ int main(int argc, char *argv[]) {
                     MWIS_weight += mwis[i].get_weight();
                 }
             }
-            
-            isSame = true;
-            if (t == 0) {
-                tmp_latest.assign(tmp.begin(), tmp.end());
-            } else {
-                for (int i = 0; i < tmp.size(); ++i) {
-                    if (tmp[i] != tmp_latest[i]) {
-                        isSame = false;
-                        break;
-                    }
-                }
-                tmp_latest.assign(tmp.begin(), tmp.end());
+
+            //
+            for (int i = 0; i < tmp.size(); ++i) {
+                printf("%d ", tmp[i]);
             }
+            printf("\n");
+
+            // Store possible results
+            store_result(tmp, MWIS_weight);
         }
 
-        // Print reuslt
-        if (isSame) {
-            printf("All %d times results are same.\n", simulation_times);
+        printf("Simulation results:\n");
+        for (int i = 0; i < result_table.size(); ++i) {
             printf("MWIS: {");
-            for (int i = 0; i < tmp_latest.size(); ++i) {
-                if (i == 0) {
-                    printf("%d", tmp_latest[i]);
+            for (int j = 0; j < result_table[i].result.size(); ++j) {
+                if (j == 0) {
+                    printf("%d", result_table[i].result[j]);
                 } else {
-                    printf(", %d", tmp_latest[i]);
+                    printf(", %d", result_table[i].result[j]);
                 }
             }
-            printf("}\n");
-            printf("Total MWIS weight: %d\n", MWIS_weight);
-        } else {
-            printf("There are some diffenents in %d times simulation.\n", simulation_times);
+            printf("}, probability: %d, Total MWIS weight: %d\n", result_table[i].count / simulation_times, result_table[i].weight);
         }
     }
 
