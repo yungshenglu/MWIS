@@ -22,12 +22,20 @@ could be IN or OUT of the set with equal probability.
 2. (M2) Anonymous algorithm. We now assume no process id to break tie when comparing priorities
 between two neighboring nodes.
 
+### Model 1
+
+* Consider a different execution model that allows **only one process to make a decision at a time** (in
+each round). Which process has the right to make its decision is purely stochastic. However, to
+make this model fair, we assume that all processes have the probability to get the right. 
+* The simulation ends when **no process will change its decision any longer**. 
+
 ---
 ## Solutions
 
-### Question 
+### Questions
 
-Modify the distributed program to generate random initial value for each node (M1 without M2). Note that different initial values may lead to different results. Performs 1,000 tests to see if all test results are identical. Did these tests produce the same result?
+* Is it possible that HW3a does not stop for some input? Why?
+* If HW3a does stop for some input file, please list all possible results (one line for each set of duplicated results) with respective percentages. Are all these results correct (independent sets)?
 
 ### Distributed programming
 
