@@ -96,12 +96,14 @@ int main(int argc, char *argv[]) {
             while (1) {
                 if (compare_result(latest, result)) {
                     ++count;
-                    if (count == 100)
-                        break;
+                    if (count != 10)
+                        break; 
                 } else {
-                    for (int i = 0; i < result.size(); ++i)
-                        latest[i] = result[i];
+                    count = 0;
                 }
+
+                for (int i = 0; i < result.size(); ++i)
+                    latest[i] = result[i];
 
                 for (int j = 0; j < mwis.size(); ++j) {
                     // Calculate the degree and priority for own vertex.
@@ -116,10 +118,7 @@ int main(int argc, char *argv[]) {
                 }
 
                 int k = rand() % 10;
-                mwis[k].recv_msg(true);
-                result[k] = mwis[k].get_map()[k].isMWIS;
-            
-                /*for (int j = 0; j < mwis.size(); ++j) {
+                for (int j = 0; j < mwis.size(); ++j) {
                     // Receive all msg from own neighbors.
                     if (j == k) {
                         mwis[j].recv_msg(true);
@@ -128,16 +127,16 @@ int main(int argc, char *argv[]) {
                     }
 
                     result[j] = mwis[j].get_map()[j].isMWIS;
-                }*/
+                }
             }
 
             // test
-            /*for (int i = 0; i < result.size(); ++i) {
+            for (int i = 0; i < result.size(); ++i) {
                 if (result[i]) {
                     printf("%d ", i);
                 }
             }
-            printf("\n");*/
+            printf("\n");
 
             MWIS_weight = 0;
             vector<int> tmp;
