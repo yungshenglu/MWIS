@@ -91,10 +91,18 @@ int main(int argc, char *argv[]) {
                 mwis[i].set_isMWIS(true);
             }
 
-            while (!compare_result(latest, result)) {
-                for (int i = 0; i < result.size(); ++i)
-                    latest[i] = result[i];
-                
+            int count = 0;
+
+            while (1) {
+                if (compare_result(latest, result)) {
+                    ++count;
+                    if (count == 100)
+                        break;
+                } else {
+                    for (int i = 0; i < result.size(); ++i)
+                        latest[i] = result[i];
+                }
+
                 for (int j = 0; j < mwis.size(); ++j) {
                     // Calculate the degree and priority for own vertex.
                     mwis[j].send_msg();
@@ -108,15 +116,28 @@ int main(int argc, char *argv[]) {
                 }
 
                 int k = rand() % 10;
-                for (int j = 0; j < mwis.size(); ++j) {
+                mwis[k].recv_msg(true);
+                result[k] = mwis[k].get_map()[k].isMWIS;
+            
+                /*for (int j = 0; j < mwis.size(); ++j) {
                     // Receive all msg from own neighbors.
-                    if (j == k)
+                    if (j == k) {
                         mwis[j].recv_msg(true);
-                    else
+                    } else {
                         mwis[j].recv_msg(false);
+                    }
+
                     result[j] = mwis[j].get_map()[j].isMWIS;
+                }*/
+            }
+
+            // test
+            /*for (int i = 0; i < result.size(); ++i) {
+                if (result[i]) {
+                    printf("%d ", i);
                 }
             }
+            printf("\n");*/
 
             MWIS_weight = 0;
             vector<int> tmp;
@@ -126,12 +147,6 @@ int main(int argc, char *argv[]) {
                     MWIS_weight += mwis[i].get_weight();
                 }
             }
-
-            //
-            for (int i = 0; i < tmp.size(); ++i) {
-                printf("%d ", tmp[i]);
-            }
-            printf("\n");
 
             // Store possible results
             store_result(tmp, MWIS_weight);
@@ -147,7 +162,7 @@ int main(int argc, char *argv[]) {
                     printf(", %d", result_table[i].result[j]);
                 }
             }
-            printf("}, probability: %d, Total MWIS weight: %d\n", result_table[i].count / simulation_times, result_table[i].weight);
+            printf("}, probability: %d%%, Total MWIS weight: %d\n", (result_table[i].count / simulation_times) * 100, result_table[i].weight);
         }
     }
 
