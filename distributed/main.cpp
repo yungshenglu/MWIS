@@ -62,6 +62,9 @@ int main(int argc, char *argv[]) {
     char *filename = argv[1];
     int simulation_times = 1000;
 
+    // Set random seeds.
+    srand(time(NULL));    
+
     // Read the input file
     fin.open(filename);
     while (!fin.eof()) {
@@ -84,7 +87,6 @@ int main(int argc, char *argv[]) {
             current.resize(vertex, false);
             
             for (int i = 0; i < mwis.size(); ++i) {
-                srand(time(NULL));
                 mwis[i].set_isMWIS(rand() % 2);
             }
             
