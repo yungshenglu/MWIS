@@ -63,6 +63,9 @@ int main(int argc, char *argv[]) {
     int simulation_times = 1000;
     bool isSame = true;
 
+    // Set random seeds
+    srand(time(NULL));
+
     // Read the input file
     fin.open(filename);
     while (!fin.eof()) {
@@ -79,9 +82,6 @@ int main(int argc, char *argv[]) {
             mwis[i].calculate_degree_priority();
             mwis[i].set_map();
         }
-
-        // Set random seeds
-        srand(time(NULL));
 
         for (int t = 0; t < simulation_times; ++t) {
             latest.resize(vertex, true);
