@@ -20,6 +20,9 @@ int main(int argc, char *argv[]) {
     char *filename = argv[1];
     int simulation_times = 1000;
     bool isSame = true;
+
+    // Set random seeds.
+    srand(time(NULL));
     
     // Read the input file
     fin.open(filename);
@@ -31,9 +34,6 @@ int main(int argc, char *argv[]) {
             mwis[i].set_weight(fin);
             mwis[i].set_index(i);
         }
-
-        // Set random seeds.
-        srand(time(NULL));
 
         for (int t = 0; t < simulation_times; ++t) {
             latest.resize(vertex, true);
