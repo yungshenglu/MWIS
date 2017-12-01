@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
     int simulation_times = 1000;
-    double prob = 0.5;
 
     // Set random seeds.
     srand(time(NULL));
@@ -116,10 +115,10 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                double k = ((rand() % 10) + 1) / 10;
+                int k = rand() % 10;
                 for (int j = 0; j < mwis.size(); ++j) {
                     // Receive all msg from own neighbors.
-                    if (k <= prob) {
+                    if (k == j) {
                         mwis[j].recv_msg(true);
                     } else {
                         mwis[j].recv_msg(false);
