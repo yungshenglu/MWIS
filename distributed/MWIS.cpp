@@ -121,25 +121,17 @@ void MWIS::calculate_degree_priority() {
 }
 
 void MWIS::calculate_MWIS(Msg msg) {
-    if (msg.priority < _priority) {
-        _isMWIS = true;
-        _map[_index].isMWIS = true;
-    } else if (msg.priority == _priority) {
-        if (msg.sender < _index) {
-            _isMWIS = false;
-            _map[_index].isMWIS = false;
-        } else {
-            _isMWIS = true;
-            _map[_index].isMWIS = true;
-        }
-    } else {
-        if (msg.isMWIS == false) {
+    if (msg.priority >= _priority) {
+         if (msg.isMWIS == false) {
             _isMWIS = true;
             _map[_index].isMWIS = true;
         } else { 
             _isMWIS = false;
             _map[_index].isMWIS = false;
         }
+    } else {
+        _isMWIS = true;
+        _map[_index].isMWIS = true;
     }
 }
 
