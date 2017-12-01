@@ -105,7 +105,8 @@ void MWIS::recv_msg(bool flag) {
         Msg recv = _recv_buff.front();
         for (int i = 0; i < _map.size(); ++i) {
             _map[i].priority = recv.map[i].priority;
-            _map[i].isMWIS = recv.map[i].isMWIS;
+            if (flag)
+                _map[i].isMWIS = recv.map[i].isMWIS;
         }
 
         if (flag)

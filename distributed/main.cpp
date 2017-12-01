@@ -57,7 +57,7 @@ bool compare_result(vector<bool> latest, vector<bool> current) {
 
 int main(int argc, char *argv[]) {
     ifstream fin;
-    vector<bool> latest, result;
+    vector<bool> last, curr;
     vector<int> tmp_latest;
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
@@ -76,34 +76,34 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < mwis.size(); ++i) {
             mwis[i].set_weight(fin);
             mwis[i].set_index(i);
+           
+        }
+
+        for (int i = 0; i < mwis.size(); ++i) {
+            mwis[i].set_path(fin);
+            mwis[i].calculate_degree_priority();
+            mwis[i].set_map();
         }
 
         for (int t = 0; t < simulation_times; ++t) {
-            latest.resize(vertex, true);
-            result.resize(vertex, false);
+            last.resize(vertex, true);
+            curr.resize(vertex, false);
 
+            // Initial all the nodes are not in the set
             for (int i = 0; i < mwis.size(); ++i) {
-                mwis[i].set_path(fin);
-                mwis[i].calculate_degree_priority();
-                mwis[i].set_map();
-
-                // Random nodes into the set.
-                mwis[i].set_isMWIS(true);
+                mwis[i].set_isMWIS(false);
             }
 
             int count = 0;
-
             while (1) {
-                if (compare_result(latest, result)) {
-                    ++count;
-                    if (count != 10)
-                        break; 
-                } else {
+                if (!compare_result(last, curr)) {
                     count = 0;
+                    for (int i = 0; i < curr.size(); ++i)
+                        last[i] = curr[i];
+                } else {
+                    if (++count >= 100)
+                        break;
                 }
-
-                for (int i = 0; i < result.size(); ++i)
-                    latest[i] = result[i];
 
                 for (int j = 0; j < mwis.size(); ++j) {
                     // Calculate the degree and priority for own vertex.
@@ -126,22 +126,14 @@ int main(int argc, char *argv[]) {
                         mwis[j].recv_msg(false);
                     }
 
-                    result[j] = mwis[j].get_map()[j].isMWIS;
+                    curr[j] = mwis[j].get_map()[j].isMWIS;
                 }
             }
-
-            // test
-            for (int i = 0; i < result.size(); ++i) {
-                if (result[i]) {
-                    printf("%d ", i);
-                }
-            }
-            printf("\n");
 
             MWIS_weight = 0;
             vector<int> tmp;
-            for (int i = 0; i < result.size(); ++i) {
-                if (result[i]) {
+            for (int i = 0; i < curr.size(); ++i) {
+                if (curr[i]) {
                     tmp.push_back(i);
                     MWIS_weight += mwis[i].get_weight();
                 }
@@ -161,7 +153,7 @@ int main(int argc, char *argv[]) {
                     printf(", %d", result_table[i].result[j]);
                 }
             }
-            printf("}, probability: %d%%, Total MWIS weight: %d\n", (result_table[i].count / simulation_times) * 100, result_table[i].weight);
+            printf("}, probability: %.0f%%, Total MWIS weight: %d\n", ((double)result_table[i].count / (double)simulation_times) * 100, result_table[i].weight);
         }
     }
 
