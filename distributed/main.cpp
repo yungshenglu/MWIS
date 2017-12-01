@@ -146,8 +146,9 @@ int main(int argc, char *argv[]) {
                 store_result(tmp, MWIS_weight);
             }
 
+            int avg_weight = 0;
             printf("Simulation results with probability %.0f%%:\n", prob * 100);
-            for (int i = 0; i < result_table.size(); ++i) {
+            for (int i = 0; i < result_table.size(); ++i) {    
                 printf("MWIS: {");
                 for (int j = 0; j < result_table[i].result.size(); ++j) {
                     if (j == 0) {
@@ -156,8 +157,11 @@ int main(int argc, char *argv[]) {
                         printf(", %d", result_table[i].result[j]);
                     }
                 }
-                printf("}, probability: %.0f%%, Total MWIS weight: %d\n", ((double)result_table[i].count / (double)simulation_times) * 100, result_table[i].weight);
+                double perc = (double)result_table[i].count / (double)simulation_times;
+                printf("}, probability: %.0f%%, Total MWIS weight: %d\n", perc * 100, result_table[i].weight);
+                avg_weight += (result_table[i].weight * perc);
             }
+            printf("Average weight: %.3f\n", (double)avg_weight);
         }
     }
 
