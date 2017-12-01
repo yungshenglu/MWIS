@@ -87,9 +87,8 @@ int main(int argc, char *argv[]) {
             latest.resize(vertex, true);
             current.resize(vertex, false);
 
+             // Random nodes into the set.
             for (int i = 0; i < mwis.size(); ++i) {
-                // Random nodes into the set.
-                srand(time(NULL));
                 mwis[i].set_isMWIS(rand() % 2);
             }
             
@@ -166,7 +165,7 @@ int main(int argc, char *argv[]) {
                         printf(", %d", result[i].result_list[j]);
                     }
                 }
-                printf("}, counts: %d, perc: %lf\n", result[i].count, (double)(result[i].count / simulation_times));
+                printf("}, counts: %d, perc: %.0f%%\n", result[i].count, ((double)result[i].count / (double)simulation_times) * 100);
                 printf("Total MWIS weight: %d\n", result[i].weight);
             }
         }
