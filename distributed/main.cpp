@@ -7,21 +7,22 @@ typedef struct table {
     vector<int> result;
     int count;
     int weight;
+    int convergence;
 } Table;
 
 vector<Table> result_table;
 
-void append_result(vector<int> result, int weight) {
+void append_result(vector<int> result, int weight, int convergence) {
     Table new_result = { 
-        result, 1, weight
+        result, 1, weight, convergence
     };
 
     result_table.push_back(new_result);
 }
 
-void store_result(vector<int> result, int weight) {
+void store_result(vector<int> result, int weight, int convergence) {
     if (!result_table.size()) {
-        append_result(result, weight);
+        append_result(result, weight, convergence);
     } else {
         bool flag = true;
 
@@ -41,7 +42,7 @@ void store_result(vector<int> result, int weight) {
         }
 
         if (!flag) {
-            append_result(result, weight);
+            append_result(result, weight, convergence);
         }
     }
 }
@@ -57,15 +58,19 @@ bool compare_result(vector<bool> latest, vector<bool> current) {
 
 int main(int argc, char *argv[]) {
     ifstream fin;
+    FILE *fout;
     vector<bool> last, curr;
     vector<int> tmp_latest;
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
     int simulation_times = 1000;
-    //double prob = 0.5;
+    int convergence = 0;
 
     // Set random seeds.
     srand(time(NULL));
+
+    // Open the output file
+    fout = fopen("result.txt","w");
 
     // Read the input file
     fin.open(filename);
@@ -84,13 +89,16 @@ int main(int argc, char *argv[]) {
             mwis[i].set_map();
         }
 
-        for (int p = 0; p <= 10; ++p) {
+        for (int p = 0; p < 10; ++p) {
             double prob = p * 0.1;
+
+            // Initialize
             result_table.clear();
 
             for (int t = 0; t < simulation_times; ++t) {
                 last.resize(vertex, true);
                 curr.resize(vertex, false);
+                convergence = 0;
 
                 // Initial all the nodes are not in the set
                 for (int i = 0; i < mwis.size(); ++i) {
@@ -99,6 +107,8 @@ int main(int argc, char *argv[]) {
 
                 int count = 0;
                 while (1) {
+                    ++convergence;
+
                     if (!compare_result(last, curr)) {
                         count = 0;
                         for (int i = 0; i < curr.size(); ++i)
@@ -143,10 +153,11 @@ int main(int argc, char *argv[]) {
                 }
 
                 // Store possible results
-                store_result(tmp, MWIS_weight);
+                store_result(tmp, MWIS_weight, convergence);
             }
 
-            int avg_weight = 0;
+            double avg_weight = 0;
+            int avg_convergence = 0;
             printf("Simulation results with probability %.0f%%:\n", prob * 100);
             for (int i = 0; i < result_table.size(); ++i) {    
                 printf("MWIS: {");
@@ -158,12 +169,20 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 double perc = (double)result_table[i].count / (double)simulation_times;
-                printf("}, probability: %.0f%%, Total MWIS weight: %d\n", perc * 100, result_table[i].weight);
+                printf("}, probability: %.1f%%, Total MWIS weight: %d\n", perc * 100, result_table[i].weight);
                 avg_weight += (result_table[i].weight * perc);
+                avg_convergence += (result_table[i].convergence * perc);
             }
-            printf("Average weight: %.3f\n", (double)avg_weight);
+            printf("Average weight: %.2f, Convergence time: %d\n", avg_weight, avg_convergence);
+            fprintf(fout, "%.1f %.2f %d\n", prob, avg_weight, avg_convergence);
         }
+
+        fclose(fout);
     }
+
+    // Plotting
+    system("python plot_avg_weight.py");
+    system("python plot_avg_convergence.py");
 
     return 0;
 }
