@@ -76,7 +76,6 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < mwis.size(); ++i) {
             mwis[i].set_weight(fin);
             mwis[i].set_index(i);
-           
         }
 
         for (int i = 0; i < mwis.size(); ++i) {
