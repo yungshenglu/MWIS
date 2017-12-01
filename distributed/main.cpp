@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
                         printf(", %d", result[i].result_list[j]);
                     }
                 }
-                printf("}, counts: %d, perc: %lf\n", result[i].count, (double)(result[i].count / simulation_times));
+                printf("}, counts: %d, perc: %.0f%%\n", result[i].count, ((double)result[i].count / (double)simulation_times) * 100);
                 printf("Total MWIS weight: %d\n", result[i].weight);
             }
         } else {
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
                         printf(", %d", result[i].result_list[j]);
                     }
                 }
-                printf("}, counts: %d, perc: %lf\n", result[i].count, (double)(result[i].count / simulation_times));
+                printf("}, counts: %d, perc: %.0f%%\n", result[i].count, ((double)result[i].count / (double)simulation_times) * 100);
                 printf("Total MWIS weight: %d\n", result[i].weight);
             }
         }
