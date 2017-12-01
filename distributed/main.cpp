@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     int vertex, MWIS_weight = 0;
     char *filename = argv[1];
     int simulation_times = 1000;
-    double prob = 0.5;
+    //double prob = 0.5;
 
     // Set random seeds.
     srand(time(NULL));
@@ -85,75 +85,80 @@ int main(int argc, char *argv[]) {
             mwis[i].set_map();
         }
 
-        for (int t = 0; t < simulation_times; ++t) {
-            last.resize(vertex, true);
-            curr.resize(vertex, false);
+        for (int p = 0; p <= 10; ++p) {
+            double prob = p * 0.1;
+            result_table.clear();
 
-            // Initial all the nodes are not in the set
-            for (int i = 0; i < mwis.size(); ++i) {
-                mwis[i].set_isMWIS(false);
-            }
+            for (int t = 0; t < simulation_times; ++t) {
+                last.resize(vertex, true);
+                curr.resize(vertex, false);
 
-            int count = 0;
-            while (1) {
-                if (!compare_result(last, curr)) {
-                    count = 0;
-                    for (int i = 0; i < curr.size(); ++i)
-                        last[i] = curr[i];
-                } else {
-                    if (++count >= 100)
-                        break;
+                // Initial all the nodes are not in the set
+                for (int i = 0; i < mwis.size(); ++i) {
+                    mwis[i].set_isMWIS(false);
                 }
 
-                for (int j = 0; j < mwis.size(); ++j) {
-                    // Calculate the degree and priority for own vertex.
-                    mwis[j].send_msg();
-                    
-                    // Send msg to each vertex's neighbors.
-                    while (!mwis[j]._send_buff.empty()) {
-                        Msg msg = mwis[j]._send_buff.front();
-                        mwis[msg.receiver]._recv_buff.push(msg);
-                        mwis[j]._send_buff.pop();
-                    }
-                }
-
-                for (int j = 0; j < mwis.size(); ++j) {
-                    double k = (rand() % 11) / 10.0;
-                    // Receive all msg from own neighbors.
-                    if (k <= prob) {
-                        mwis[j].recv_msg(true);
+                int count = 0;
+                while (1) {
+                    if (!compare_result(last, curr)) {
+                        count = 0;
+                        for (int i = 0; i < curr.size(); ++i)
+                            last[i] = curr[i];
                     } else {
-                        mwis[j].recv_msg(false);
+                        if (++count >= 100)
+                            break;
                     }
 
-                    curr[j] = mwis[j].get_map()[j].isMWIS;
+                    for (int j = 0; j < mwis.size(); ++j) {
+                        // Calculate the degree and priority for own vertex.
+                        mwis[j].send_msg();
+                        
+                        // Send msg to each vertex's neighbors.
+                        while (!mwis[j]._send_buff.empty()) {
+                            Msg msg = mwis[j]._send_buff.front();
+                            mwis[msg.receiver]._recv_buff.push(msg);
+                            mwis[j]._send_buff.pop();
+                        }
+                    }
+
+                    for (int j = 0; j < mwis.size(); ++j) {
+                        double k = (rand() % 11) / 10.0;
+                        // Receive all msg from own neighbors.
+                        if (k <= prob) {
+                            mwis[j].recv_msg(true);
+                        } else {
+                            mwis[j].recv_msg(false);
+                        }
+
+                        curr[j] = mwis[j].get_map()[j].isMWIS;
+                    }
                 }
+
+                MWIS_weight = 0;
+                vector<int> tmp;
+                for (int i = 0; i < curr.size(); ++i) {
+                    if (curr[i]) {
+                        tmp.push_back(i);
+                        MWIS_weight += mwis[i].get_weight();
+                    }
+                }
+
+                // Store possible results
+                store_result(tmp, MWIS_weight);
             }
 
-            MWIS_weight = 0;
-            vector<int> tmp;
-            for (int i = 0; i < curr.size(); ++i) {
-                if (curr[i]) {
-                    tmp.push_back(i);
-                    MWIS_weight += mwis[i].get_weight();
+            printf("Simulation results with probability %.0f%%:\n", prob * 100);
+            for (int i = 0; i < result_table.size(); ++i) {
+                printf("MWIS: {");
+                for (int j = 0; j < result_table[i].result.size(); ++j) {
+                    if (j == 0) {
+                        printf("%d", result_table[i].result[j]);
+                    } else {
+                        printf(", %d", result_table[i].result[j]);
+                    }
                 }
+                printf("}, probability: %.0f%%, Total MWIS weight: %d\n", ((double)result_table[i].count / (double)simulation_times) * 100, result_table[i].weight);
             }
-
-            // Store possible results
-            store_result(tmp, MWIS_weight);
-        }
-
-        printf("Simulation results:\n");
-        for (int i = 0; i < result_table.size(); ++i) {
-            printf("MWIS: {");
-            for (int j = 0; j < result_table[i].result.size(); ++j) {
-                if (j == 0) {
-                    printf("%d", result_table[i].result[j]);
-                } else {
-                    printf(", %d", result_table[i].result[j]);
-                }
-            }
-            printf("}, probability: %.0f%%, Total MWIS weight: %d\n", ((double)result_table[i].count / (double)simulation_times) * 100, result_table[i].weight);
         }
     }
 
