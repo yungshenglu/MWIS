@@ -117,8 +117,8 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                double k = ((rand() % 10) + 1) / 10;
                 for (int j = 0; j < mwis.size(); ++j) {
+                    double k = (rand() % 11) / 10.0;
                     // Receive all msg from own neighbors.
                     if (k <= prob) {
                         mwis[j].recv_msg(true);
