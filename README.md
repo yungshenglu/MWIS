@@ -22,12 +22,12 @@ could be IN or OUT of the set with equal probability.
 2. (M2) Anonymous algorithm. We now assume no process id to break tie when comparing priorities
 between two neighboring nodes.
 
-### Model 1
+### Performance Matrices
 
-* Consider a different execution model that allows **only one process to make a decision at a time** (in
-each round). Which process has the right to make its decision is purely stochastic. However, to
-make this model fair, we assume that all processes have the probability to get the right. 
-* The simulation ends when **no process will change its decision any longer**. 
+Consider two performance matrices:
+* Averaged total weight (in the set) 
+* Averaged convergence time (the number of rounds to the end of the simulations). 
+Change the value of $p$ in from 0.1 to 0.9 (with step 0.1)
 
 ---
 ## Solutions
@@ -88,14 +88,78 @@ $ ./main test2.txt
 
 ```bash
 $ ./main test1.txt
-All 1000 times results are same.
-MWIS: {1, 4, 5, 7, 8, 9}
-Total MWIS weight: 274
+Simulation results with probability 0%:
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 48.9%, Total MWIS weight: 274
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 51.1%, Total MWIS weight: 259
+Average weight: 266.33, Convergence time: 151
+Simulation results with probability 10%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 49.7%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 50.3%, Total MWIS weight: 274
+Average weight: 266.55, Convergence time: 119
+Simulation results with probability 20%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 51.1%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 48.9%, Total MWIS weight: 274
+Average weight: 266.33, Convergence time: 113
+Simulation results with probability 30%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 52.7%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 47.3%, Total MWIS weight: 274
+Average weight: 266.10, Convergence time: 111
+Simulation results with probability 40%:
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 48.2%, Total MWIS weight: 274
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 51.8%, Total MWIS weight: 259
+Average weight: 266.23, Convergence time: 111
+Simulation results with probability 50%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 50.9%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 49.1%, Total MWIS weight: 274
+Average weight: 266.37, Convergence time: 109
+Simulation results with probability 60%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 50.0%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 50.0%, Total MWIS weight: 274
+Average weight: 266.50, Convergence time: 106
+Simulation results with probability 70%:
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 49.4%, Total MWIS weight: 259
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 50.6%, Total MWIS weight: 274
+Average weight: 266.59, Convergence time: 105
+Simulation results with probability 80%:
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 52.3%, Total MWIS weight: 274
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 47.7%, Total MWIS weight: 259
+Average weight: 266.84, Convergence time: 108
+Simulation results with probability 90%:
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 47.8%, Total MWIS weight: 274
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 52.2%, Total MWIS weight: 259
+Average weight: 266.17, Convergence time: 108
 
 $ ./main test2.txt
-All 1000 times results are same.
-MWIS: {4, 5, 6, 8}
-Total MWIS weight: 324
+Simulation results with probability 0%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 176
+Simulation results with probability 10%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 125
+Simulation results with probability 20%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 134
+Simulation results with probability 30%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 123
+Simulation results with probability 40%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 109
+Simulation results with probability 50%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 114
+Simulation results with probability 60%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 107
+Simulation results with probability 70%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 109
+Simulation results with probability 80%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 106
+Simulation results with probability 90%:
+MWIS: {4, 5, 6, 8}, probability: 100.0%, Total MWIS weight: 324
+Average weight: 324.00, Convergence time: 105
 ```
 
 ---
