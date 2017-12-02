@@ -22,12 +22,10 @@ could be IN or OUT of the set with equal probability.
 2. (M2) Anonymous algorithm. We now assume no process id to break tie when comparing priorities
 between two neighboring nodes.
 
-### Model 1
+### Model 2
 
-* Consider a different execution model that allows **only one process to make a decision at a time** (in
-each round). Which process has the right to make its decision is purely stochastic. However, to
-make this model fair, we assume that all processes have the probability to get the right. 
-* The simulation ends when **no process will change its decision any longer**. 
+* It allows an arbitrary number of processes to make decisions in a single round. The number of processes that get the right to make decisions is random. 
+* We also assume that each process has the same probability p to get the right.
 
 ---
 
