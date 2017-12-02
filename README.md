@@ -30,7 +30,6 @@ make this model fair, we assume that all processes have the probability to get t
 * The simulation ends when **no process will change its decision any longer**. 
 
 ---
-## Solutions
 
 ### Questions
 
@@ -88,14 +87,11 @@ $ ./main test2.txt
 
 ```bash
 $ ./main test1.txt
-All 1000 times results are same.
-MWIS: {1, 4, 5, 7, 8, 9}
-Total MWIS weight: 274
+MWIS: {1, 4, 5, 7, 8, 9}, probability: 49%, Total MWIS weight: 274
+MWIS: {0, 3, 4, 5, 7, 8}, probability: 51%, Total MWIS weight: 259
 
 $ ./main test2.txt
-All 1000 times results are same.
-MWIS: {4, 5, 6, 8}
-Total MWIS weight: 324
+MWIS: {4, 5, 6, 8}, probability: 100%, Total MWIS weight: 324
 ```
 
 ---
