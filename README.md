@@ -2,7 +2,7 @@
 
 [![License: IEEE](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight. *Notice that this repository is NCTU CS course assignment of "Distributed Algorithnm". If you are taking this course, please do not duplicate from this repository. All rights reserved.*
+This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight. *Notice that this repository is NCTU CS course assignment of "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.*
 
 ## Introduction
 
@@ -123,6 +123,6 @@ Total MWIS weight: 274
 * [Yung-Sheng Lu](https://github.com/yungshenglu)
 
 ---
-> This repository is the NCTU CS course assignment of "Distributed Algorithnm". If you are taking this course, please do not duplicate from this repository. All rights reserved.
+> This repository is the NCTU CS course assignment of "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.
 
 [![License: IEEE](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
