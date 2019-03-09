@@ -1,9 +1,12 @@
-# Maximal Weighted Independent Set Problem
+# Maximal Weighted Independent Set (MWIS) Problem
 
-[![License: IEEE](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+This repository is a assignment in NCTU course "Distributed Algorithnms 2017".
 
-This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight. *Notice that this repository is NCTU CS course assignment of "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.*
+## Abstract
 
+This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight. 
+
+---
 ## Introduction
 
 ### Maximum Independent Set (MIS)
@@ -52,7 +55,7 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
 * Print the result of MWIS set and it's total weight.
 
 ---
-## Structure
+## File Description
 
 * Folder `centralized` - program by centralized method
     * `Makefile`
@@ -113,16 +116,13 @@ Total MWIS weight: 274
 ```
 
 ---
-## TODO
-
-(Update soon.)
-
----
 ## Author
 
-* [Yung-Sheng Lu](https://github.com/yungshenglu)
+* [David Lu](https://github.com/yungshenglu)
 
 ---
-> This repository is the NCTU CS course assignment of "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.
+## License
 
-[![License: IEEE](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+[GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
+
+> This repository is the assignment in NCTU course "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.
