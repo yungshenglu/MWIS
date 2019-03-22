@@ -1,14 +1,51 @@
-# vscode.config
+
+# Created by https://www.gitignore.io/api/c++,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=c++,visualstudiocode
+
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+### VisualStudioCode ###
 .vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# object file
-./centralized/*.o
-./distributed/*.o
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
 
-# execution file
-./centralized/main
-./distributed/main
-
-# test_result
-./centralized/test_result1.txt
-./distributed/test_result2.txt
+# End of https://www.gitignore.io/api/c++,visualstudiocode
