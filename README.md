@@ -1,15 +1,13 @@
 # Maximal Weighted Independent Set (MWIS) Problem
 
-This repository is a assignment in NCTU course "Distributed Algorithnms 2017".
+This repository is an assignment in NCTU course "Distributed Algorithnms 2017".
 
-## Abstract
+## Description
 
-This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight. 
-
----
-## Introduction
+This repository is going to solve the **Maximal Weighted Independent Set (MWIS)** problem by given each vertex's weight.
 
 ### Maximum Independent Set (MIS)
+
 In an undirected graph $G = (V, E)$, where $V$ is the vertex set and $E$ is the edge set, $S \subseteq V$ is an independent set if no vertices in $S$ are adjacent to one another. An independent set that has the maximum cardinality is called **maximum independent set**.
 If each vertex is associated with a weight (a positive real number), then $S$ is a maximum weighted independent set if it is an independent set that has the maximum total weight among all such sets. Clearly, a maximum independent set is a maximum weighted independent set with uniform weight. Finding either set is known to be NP-hard, for which polynomial-time approximation is NP-hard as well.
 
@@ -75,45 +73,26 @@ Simulate the **mailbox operation**, let each vertex to have own send buffer and 
     * `test_result2.txt` - reference result for input file
 
 ---
-## Installation
+## Execution
 
-### Centralized
-
-```bash
-# Compilation under centralized folder
-$ make
-
-# Execution for centralized program
-$ ./main test1.txt
-```
-
-### Distributed
-
-```bash
-# Compilation under distributed folder
-$ make
-
-# Exrcution for distributed program
-$ ./main test2.txt
-```
-
----
-## Results
-
-### Centralized
-```bash
-$ ./main test1.txt
-MWIS: {0, 3, 4, 5, 7, 8}
-Total MWIS weight: 259
-```
-
-### Distributed
-
-```bash
-$ ./main test2.txt
-MWIS: {1, 4, 5, 7, 8, 9}
-Total MWIS weight: 274
-```
+* Centralized
+    ```bash
+    # Make sure your current directory is "./centralized/"
+    $ make
+    # Execute with the test input "../../input/test1.txt"
+    $ ./main ../../input/test1.txt
+    MWIS: {0, 3, 4, 5, 7, 8}
+    Total MWIS weight: 259
+    ```
+* Distributed
+    ```bash
+    # Make sure your current directory is "./distributed/"
+    $ make
+    # Execute with the test input "../../input/test2.txt"
+    $ ./main ../../input/test2.txt
+    MWIS: {1, 4, 5, 7, 8, 9}
+    Total MWIS weight: 274
+    ```
 
 ---
 ## Author
@@ -124,5 +103,3 @@ Total MWIS weight: 274
 ## License
 
 [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
-
-> This repository is the assignment in NCTU course "Distributed Algorithnms 2017". If you are taking this course, please do not duplicate from this repository. All rights reserved.
