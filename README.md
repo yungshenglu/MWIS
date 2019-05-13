@@ -1,4 +1,4 @@
-# Maximal Weighted Independent Set (MWIS) Problem
+# Maximal Weighted Independent Set (MWIS)
 
 This repository is an assignment in NCTU course "Distributed Algorithnms 2017".
 
